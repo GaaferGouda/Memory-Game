@@ -50,8 +50,16 @@ st.markdown(
 
 # ---------- INIT GAME ----------
 def init_game():
-    # Use image paths for cards
-    logos = [f"images/{i}.png" for i in range(1, 9)]
+    logos = [
+        "ᶻ 𝗓 𐰁", 
+        "ִֶָ. ..𓂃 ࣪ ִֶָ🪽་༘࿐", 
+        "૮₍ ˶ᵔ ᵕ ᵔ˶ ₎ა", 
+        "𝄞⨾𓍢ִ໋", 
+        "જ⁀➴", 
+        "‧₊˚♪ 𝄞₊˚⊹", 
+        "☆⌒(ゝ。∂)", 
+        "૮₍ ´ ꒳ `₎ა"
+    ]
     cards = logos * 2
     random.shuffle(cards)
 
@@ -66,19 +74,17 @@ if "cards" not in st.session_state:
 
 # ---------- UI ----------
 st.title("🎮 Memory Game")
-st.caption("Match the same images")
+st.caption("Match the same symbols")
 
 cols = st.columns(4)
 
 for i in range(16):
     with cols[i % 4]:
-        if st.session_state.visible[i]:
-            st.image(st.session_state.cards[i], use_column_width=True)
-        else:
-            if st.button("❓", key=i, use_container_width=True):
-                if len(st.session_state.selected) < 2:
-                    st.session_state.visible[i] = True
-                    st.session_state.selected.append(i)
+        label = st.session_state.cards[i] if st.session_state.visible[i] else "❓"
+        if st.button(label, key=i, use_container_width=True):
+            if not st.session_state.visible[i] and len(st.session_state.selected) < 2:
+                st.session_state.visible[i] = True
+                st.session_state.selected.append(i)
 
 # ---------- GAME LOGIC ----------
 if len(st.session_state.selected) == 2:
@@ -101,7 +107,7 @@ st.metric("Matches", f"{st.session_state.matches}/8")
 
 # ---------- WIN ----------
 if st.session_state.matches == 8:
-    st.success("🎉 You matched all images!")
+    st.success("🎉 You matched all symbols!")
     st.balloons()
 
 # ---------- RESET BUTTON ----------
