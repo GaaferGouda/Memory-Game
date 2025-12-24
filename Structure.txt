@@ -1,0 +1,8 @@
+concentration-game/
+│
+├── app.py
+├── requirements.txt
+└── sounds/
+    ├── click.mp3
+    ├── match.mp3
+    └── win.mp3
